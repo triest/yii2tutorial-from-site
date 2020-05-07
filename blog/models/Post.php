@@ -3,7 +3,7 @@
     namespace app\models;
 
     use Yii;
-    use yii\helpers\ArrayHelper;
+    use yii\web\UploadedFile;
 
     /**
      * This is the model class for table "post".
@@ -15,6 +15,9 @@
      * @property string|null $title
      * @property string|null $description
      * @property int|null $category_id
+     * @property string|null $updated_at
+     * @property string|null $created_at
+     * @property string|null $photo
      *
      * @property Comment[] $comments
      * @property PostTag[] $postTags
@@ -36,9 +39,8 @@
         {
             return [
                     [['status', 'author_id', 'category_id'], 'integer'],
-                    [['email', 'title', 'description'], 'string', 'max' => 255],
-                    [['title', 'description'], 'required'],
-                    [['title', 'description'], 'string', 'min' => 5],
+                    [['updated_at', 'created_at'], 'safe'],
+                    [['email', 'title', 'description', 'photo'], 'string', 'max' => 255],
             ];
         }
 
@@ -54,6 +56,10 @@
                     'author_id' => 'Author ID',
                     'title' => 'Title',
                     'description' => 'Description',
+                    'category_id' => 'Category ID',
+                    'updated_at' => 'Updated At',
+                    'created_at' => 'Created At',
+                    'photo' => 'Photo',
             ];
         }
 
@@ -112,5 +118,18 @@
          *
          * @return \yii\db\ActiveQuery
          */
+        public function getPostTags()
+        {
+            return $this->hasMany(PostTag::className(), ['post_id' => 'id']);
+        }
 
+        public function uploadFile(UploadedFile $file)
+        {
+            $this->photo = $file;
+            $filename = strtolower(md5(uniqid($file->baseName)) . '.' . $file->extension);
+            $file->saveAs(Yii::getAlias('@webroot') . '/uploads/' . $filename);
+            $this->photo = $filename;
+            $this->save(false);
+            return $filename;
+        }
     }

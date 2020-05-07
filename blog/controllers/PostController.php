@@ -12,6 +12,7 @@
     use yii\web\Controller;
     use yii\web\NotFoundHttpException;
     use yii\filters\VerbFilter;
+    use yii\web\UploadedFile;
 
     /**
      * PostController implements the CRUD actions for Post model.
@@ -56,7 +57,7 @@
          */
         public function actionIndex()
         {
-            $qwurt = Post::find();
+            $qwurt = Post::find()->where(['=', 'status', 1]);
             $pagination = new Pagination(['totalCount' => $qwurt, 'pageSize' => 10]);
             $articles = $qwurt->offset($pagination->offset)
                     ->limit($pagination->limit)
@@ -93,7 +94,11 @@
                 if ($tags != null) {
                     $model->saveTags($tags);
                 }
-                
+                $file = UploadedFile::getInstance($model, 'photo');
+                if ($file != null) {
+                    $file = $model->uploadFile($file);
+                }
+
                 return $this->redirect(['post/view', 'id' => $model->id]);
             }
             $tags = ArrayHelper::map(Tag::find()->all(), 'id', 'title');
@@ -147,7 +152,7 @@
          */
         protected function findModel($id)
         {
-            if (($model = Post::findOne($id)) !== null) {
+            if (($model = Post::findOne($id)) !== null && $model->status == 1) {
                 return $model;
             }
 
