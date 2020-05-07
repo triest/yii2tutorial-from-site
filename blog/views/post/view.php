@@ -1,39 +1,38 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\DetailView;
+    use yii\helpers\Url;
+    use yii\widgets\ActiveForm;
+    use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Post */
-
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
-<div class="post-view">
+<!--main content start-->
+<div class="main-content">
+    <div class="container">
+        <div class="row">
+            <article class="post">
+                <div class="post-thumb">
+                </div>
+                <div class="post-content">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+                    <header class="entry-header text-center text-uppercase">
+                        <h1 class="entry-title"><?= $model->title ?></h1>
+                    </header>
+                    <div class="entry-content">
+                        <?= $model->description ?>
+                    </div>
+                    Теги:
+                    <? $tags=$model->tags;
+                     foreach ($tags as $tag): ?>
+                         <?=$tag->title ?>
+                    <? endforeach; ?>
+                </div>
+            </article>
+            <a  href="<?= Url::toRoute(['/post']); ?>"
+               class="btn btn-primary">
+                Назад
+            </a>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'email:email',
-            'status',
-            'author_id',
-        ],
-    ]) ?>
-
+        </div>
+    </div>
 </div>
+<!-- end main content-->
