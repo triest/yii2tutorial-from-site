@@ -64,25 +64,12 @@
                 //    $user->attributes = $this->attributes;
                 $user->name = $this->name;
                 $user->email = $this->email;
-                $user->password = $this->password;
-                //   $user->emailToken = Yii::$app->security->generateRandomString(32);
-                // $this->endConfurmEmail($user->mail, $user->emailToken);
-
+                $hash = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+                $user->password=$hash;
                 $user->create();
                 return $user;
             }
             return null;
-        }
-
-        public function sendConfurmEmail($email, $token)
-        {
-
-
-            Yii::$app->mailer->compose(['html' => '@app/mail/html'], ['token' => $token])
-                    ->setFrom('sakura-testmail@sakura-city.info')
-                    ->setTo($email)
-                    ->setSubject('Please confurm you email')
-                    ->send();
         }
 
     }
