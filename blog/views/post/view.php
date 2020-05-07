@@ -16,18 +16,22 @@
 
                     <header class="entry-header text-center text-uppercase">
                         <h1 class="entry-title"><?= $model->title ?></h1>
+                        <small><?= $model->created_at ?></small>
+                        <? if ($model->updated_at != null) { ?>
+                            <?= $model->updated_at ?>
+                        <? } ?>
                     </header>
                     <div class="entry-content">
                         <?= $model->description ?>
                     </div>
                     Теги:
-                    <? $tags=$model->tags;
-                     foreach ($tags as $tag): ?>
-                         <?=$tag->title ?>
-                    <? endforeach; ?>
+                    <? $tags = $model->tags;
+                        foreach ($tags as $tag): ?>
+                            <a href="<?= Url::toRoute(['/tag/posts', 'id' => $tag->id]); ?>"> <?= $tag->title ?> </a>,
+                        <? endforeach; ?>
                 </div>
             </article>
-            <a  href="<?= Url::toRoute(['/post']); ?>"
+            <a href="<?= Url::toRoute(['/post']); ?>"
                class="btn btn-primary">
                 Назад
             </a>

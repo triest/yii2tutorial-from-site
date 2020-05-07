@@ -1,37 +1,43 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
+    use yii\helpers\Html;
+    use yii\grid\GridView;
+    use yii\helpers\Url;
 
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\TagSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+    /* @var $this yii\web\View */
+    /* @var $searchModel app\models\PostSearch */
+    /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tags';
-$this->params['breadcrumbs'][] = $this->title;
+    $this->title = 'Posts';
+    $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="tag-index">
+<div class="post-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Tag', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    Посты по тегу : <?= $tag->title ?>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <? foreach ($posts as $article): ?>
+        <article class="post">
+            <div class="post-thumb">
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                <a href="<?= Url::toRoute(['post/view', 'id' => $article->id]); ?>"
+                   class="post-thumb-overlay text-center">
+                </a>
+            </div>
+            <div class="post-content">
+                <header class="entry-header text-center text-uppercase">
+                    <h1 class="entry-title"><a href="<?= Url::toRoute([
+                                'post/view',
+                                'id' => $article->id
+                        ]); ?>"><?= $article->title ?></a></h1>
+                </header>
+                <div class="social-share">
 
-            'id',
-            'title',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                </div>
+            </div>
+        </article>
+    <? endforeach; ?>
 
 
 </div>

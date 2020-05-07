@@ -2,11 +2,13 @@
 
     namespace app\controllers;
 
+    use app\models\Tag;
     use Yii;
     use app\models\Post;
     use app\models\PostSearch;
     use yii\data\Pagination;
     use yii\filters\AccessControl;
+    use yii\helpers\ArrayHelper;
     use yii\web\Controller;
     use yii\web\NotFoundHttpException;
     use yii\filters\VerbFilter;
@@ -30,11 +32,11 @@
                     ],
                     'access' => [
                             'class' => AccessControl::className(),
-                            'only' => ['login', 'logout', 'signup',  ],
+                            'only' => ['login', 'logout', 'signup',],
                             'rules' => [
                                     [
                                             'allow' => true,
-                                            'actions' => ['login', 'signup','create','update', 'delete'],
+                                            'actions' => ['login', 'signup', 'create', 'update', 'delete'],
                                             'roles' => ['?'],
                                     ],
                                     [
@@ -55,7 +57,7 @@
         public function actionIndex()
         {
             $qwurt = Post::find();
-            $pagination = new Pagination(['totalCount' => $qwurt, 'pageSize' => 1]);
+            $pagination = new Pagination(['totalCount' => $qwurt, 'pageSize' => 10]);
             $articles = $qwurt->offset($pagination->offset)
                     ->limit($pagination->limit)
                     ->all();
@@ -86,15 +88,19 @@
         {
             $model = new Post();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                $model->status = 0;
-                $model->author_id = Yii::$app->user->identity->id;
-                $model->save();
+            if ($model->load(Yii::$app->request->post()) && $model->savePost()) {
+                $tags = Yii::$app->request->post('tags');
+                if ($tags != null) {
+                    $model->saveTags($tags);
+                }
+                
                 return $this->redirect(['post/view', 'id' => $model->id]);
             }
+            $tags = ArrayHelper::map(Tag::find()->all(), 'id', 'title');
 
             return $this->render('create', [
                     'model' => $model,
+                    'tags' => $tags
             ]);
         }
 

@@ -20,25 +20,15 @@
     </p>
 
     <? foreach ($posts as $article): ?>
-        <article class="post">
-            <div class="post-thumb">
-
-                <a href="<?= Url::toRoute(['post/view', 'id' => $article->id]); ?>"
-                   class="post-thumb-overlay text-center">
-                </a>
-            </div>
-            <div class="post-content">
-                <header class="entry-header text-center text-uppercase">
-                    <h1 class="entry-title"><a href="<?= Url::toRoute([
-                                'post/view',
-                                'id' => $article->id
-                        ]); ?>"><?= $article->title ?></a></h1>
-                </header>
-                <div class="social-share">
-
-                </div>
-            </div>
-        </article>
+        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+        <div class="card-body">
+            <h2 class="card-title"><?=$article->title ?></h2>
+            <a href="#" class="btn btn-primary">Read More &rarr;</a>
+        </div>
+        <div class="card-footer text-muted">
+            Posted on January 1, 2017 by
+            <a href="#">Start Bootstrap</a>
+        </div>
     <? endforeach; ?>
 
 

@@ -17,6 +17,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'description')->textarea() ?>
 
 
+    <?= Html::dropDownList('tags',[],  $tags, ['class'=>'form-control', 'multiple'=>true]) ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

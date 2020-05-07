@@ -37,6 +37,8 @@
             return [
                     [['status', 'author_id', 'category_id'], 'integer'],
                     [['email', 'title', 'description'], 'string', 'max' => 255],
+                    [['title', 'description'], 'required'],
+                    [['title', 'description'], 'string', 'min' => 5],
             ];
         }
 
@@ -92,12 +94,17 @@
         }
 
 
-
-
         public function getSelectedTags()
         {
             $selectedIds = $this->getTags()->select('id')->asArray()->all();
             return ArrayHelper::getColumn($selectedIds, 'id');
+        }
+
+        public function savePost()
+        {
+            $this->status = 0;
+            $this->author_id = Yii::$app->user->identity->id;
+            return $this->save();
         }
 
         /**

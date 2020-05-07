@@ -12,7 +12,16 @@
          */
         public function safeUp()
         {
-            $this->addColumn('post', 'date', $this->date());
+            $this->addColumn(
+                    'post',
+                    'updated_at',
+                    $this->timestamp()->defaultValue(null)->append('ON UPDATE CURRENT_TIMESTAMP')
+            );
+            $this->addColumn(
+                    'post',
+                    'created_at',
+                    $this->timestamp()->defaultValue(null)->Null()->append('DEFAULT CURRENT_TIMESTAMP')
+            );
         }
 
         /**
@@ -20,6 +29,7 @@
          */
         public function safeDown()
         {
-            $this->dropColumn('post', 'date');
+            $this->dropColumn('post', 'created_at');
+            $this->dropColumn('post', 'updated_at');
         }
     }
