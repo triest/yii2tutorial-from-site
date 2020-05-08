@@ -32,24 +32,24 @@
                             ],
                     ],
                     'access' => [
-                            'class' => AccessControl::className(),
-                            'only' => ['create'],
+                            'class' => \yii\filters\AccessControl::className(),
+                            'only' => ['create', 'update'],
                             'rules' => [
+                                // deny all POST requests
                                     [
                                             'allow' => false,
-                                            'actions' => [ 'create', 'update', 'delete'],
-                                            'roles' => ['?'],
+                                            'verbs' => ['POST']
                                     ],
+                                // allow authenticated users
                                     [
                                             'allow' => true,
-                                            'actions' => ['logout'],
                                             'roles' => ['@'],
                                     ],
+                                // everything else is denied
                             ],
-                    ],
+                    ]
             ];
         }
-
 
         /**
          * Lists all Post models.
@@ -59,11 +59,11 @@
         {
             $qwurt = Post::find()->where(['=', 'status', 1]);
             $pagination = new Pagination(['totalCount' => $qwurt, 'pageSize' => 10]);
-            $articles = $qwurt->offset($pagination->offset)
+            $posts = $qwurt->offset($pagination->offset)
                     ->limit($pagination->limit)
                     ->all();
             return $this->render('index', [
-                    'posts' => $articles,
+                    'posts' => $posts,
             ]);
         }
 

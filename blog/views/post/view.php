@@ -17,9 +17,10 @@
                     <header class="entry-header text-center text-uppercase">
                         <h1 class="entry-title"><?= $model->title ?></h1>
                         <br>
-                        <img height="250" src="<?= Yii::$app->request->baseUrl . $model->getImage(); ?>"
-
-                        <small><?= $model->created_at ?></small>
+                        <img src="<?= Yii::$app->request->baseUrl . $model->getImage(); ?>"
+                        <p>
+                            <small><?= $model->created_at ?></small>
+                        </p>
                         <? if ($model->updated_at != null) { ?>
                             <?= $model->updated_at ?>
                         <? } ?>

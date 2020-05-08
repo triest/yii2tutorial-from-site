@@ -48,6 +48,19 @@
                             'enablePrettyUrl' => true,
                             'showScriptName' => false,
                             'rules' => [
+                                    [
+                                            'class' => 'yii\rest\UrlRule',
+                                            'controller' => 'RestPost',
+                                            'pluralize' => false,
+                                            'extraPatterns' => [
+                                                    'GET ' => 'index',
+                                                    'POST' => 'create', // 'xxxxx' refers to 'actionXxxxx'
+                                                    'POST {id}' => 'update',
+                                                    'PATCH {id}' => 'update',
+                                                    'DELETE {id}' => 'delete',
+                                                    'GET /{id]' => 'view',
+                                            ],
+                                    ],
                             ],
                     ],
 

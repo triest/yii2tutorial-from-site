@@ -21,6 +21,7 @@
 
     <? foreach ($posts as $article): ?>
         <img src="<?= Yii::$app->request->baseUrl . $article->getImage(); ?>"
+             <? var_dump( $article->getImage()) ?>
              alt="" width="150">
         <div class="card-body">
             <h2 class="card-title"><?= $article->title ?></h2>
