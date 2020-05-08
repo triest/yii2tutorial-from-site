@@ -33,11 +33,11 @@
                     ],
                     'access' => [
                             'class' => AccessControl::className(),
-                            'only' => ['login', 'logout', 'signup',],
+                            'only' => ['create'],
                             'rules' => [
                                     [
-                                            'allow' => true,
-                                            'actions' => ['login', 'signup', 'create', 'update', 'delete'],
+                                            'allow' => false,
+                                            'actions' => [ 'create', 'update', 'delete'],
                                             'roles' => ['?'],
                                     ],
                                     [

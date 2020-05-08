@@ -25,7 +25,7 @@
             if (Yii::$app->request->isPost) {
                 $model->load(Yii::$app->request->post());
                 if ($user = $model->signup()) {
-                    return $this->redirect(['site/index']);
+                    return $this->redirect(['post/index']);
                 }
             }
             return $this->render('signup', ['model' => $model]);
@@ -44,7 +44,7 @@
             }
             $model = new LoginForm();
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
-                return $this->redirect(['site/index']);
+                return $this->redirect(['post/index']);
             }
             $model->password = '';
             return $this->render('login', [
@@ -61,7 +61,7 @@
         {
             Yii::$app->user->logout();
 
-            return $this->redirect(['site/index']);
+            return $this->redirect(['post/index']);
         }
 
 

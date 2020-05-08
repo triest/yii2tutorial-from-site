@@ -132,4 +132,11 @@
             $this->save(false);
             return $filename;
         }
+
+        public function getImage()
+        {
+            return ($this->photo) ? '/uploads/' . $this->photo : 'no-image.png';
+           // return ($this->image) ? Yii::getAlias('@webroot') . '/uploads/'. $this->photo : '/no-image.png';
+        }
+
     }

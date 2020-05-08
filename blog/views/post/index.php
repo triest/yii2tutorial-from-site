@@ -20,7 +20,8 @@
     </p>
 
     <? foreach ($posts as $article): ?>
-        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+        <img src="<?= Yii::$app->request->baseUrl . $article->getImage(); ?>"
+             alt="" width="150">
         <div class="card-body">
             <h2 class="card-title"><?= $article->title ?></h2>
             <a href="<?= Url::to(['/post/view', 'id' => $article->id]); ?>" class="btn btn-primary">Read More &rarr;</a>
